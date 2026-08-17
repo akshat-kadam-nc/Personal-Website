@@ -247,7 +247,7 @@ export function CoverReader() {
 
   return <section className="cover-reader" ref={readerRef} aria-labelledby="cover-title">
     <div className="cover-stage" ref={stageRef}>
-      <img className="cover-fallback" src="/akshat-kadam-cover.webp?v=20260817-2" alt="Illustrated manga cover introducing Akshat Kadam" />
+      <img className="cover-fallback" src="/akshat-kadam-cover.webp" alt="Illustrated manga cover introducing Akshat Kadam" />
       <div className="reader-glyph" aria-hidden="true">始</div>
       <div className="reader-spine" aria-hidden="true"><span>ISSUE <AgeIssue /></span><span>AKSHAT KADAM</span><span>始まり</span></div>
       <div className="reader-topline"><span>AKSHAT KADAM · ISSUE <AgeIssue /></span><span>SCROLL TO OPEN</span></div>

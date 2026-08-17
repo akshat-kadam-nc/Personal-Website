@@ -1,20 +1,20 @@
-# Akshat Kadam
+# Akshat Kadam — Personal Archive
 
-The first public surface for akshatkadam.com: an editorial landing page for Akshat's work across technology, education, AI, and India–Japan.
+The production source for [akshatkadam.com](https://akshatkadam.com): a manga-inspired personal portfolio built with Next.js, React, TypeScript, Three.js, and server-side API routes.
 
 ## Run locally
 
-Use a recent Node.js runtime, install dependencies, then run the development command:
+Use Node.js 22 and pnpm:
 
 ```bash
 pnpm install
 pnpm dev
 ```
 
-## Connect the AI assistant
+## Environment
 
-Copy `.env.example` to `.env.local` and set `NEXT_PUBLIC_AGENT_URL` to the public URL of the separately developed AI assistant. The landing page will then show an **Open the AI assistant** button.
+Copy `.env.example` to `.env.local` and provide the server-side assistant variables. Secrets are consumed only by the API routes and are never exposed to the browser.
 
-## Next phase
+## Deployment
 
-The implementation roadmap and proposed MDX content architecture are in [PLAN.md](./PLAN.md). The current landing page intentionally establishes the visual system and public entry point before the archive, search, and publishing system are added.
+The `main` branch deploys to Vercel. The framework preset is Next.js and no custom output directory is required.

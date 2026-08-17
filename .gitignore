@@ -16,8 +16,6 @@
 
 # next.js
 /.next/
-/.vinext/
-/.vinext-dev.log
 /out/
 
 # misc
@@ -38,11 +36,6 @@ yarn-error.log*
 
 # vercel
 .vercel
-
-/dist/
-/.wrangler/
-/outputs/
-/work/
 
 # local source artwork; deployable WebP assets live in /public
 /images/

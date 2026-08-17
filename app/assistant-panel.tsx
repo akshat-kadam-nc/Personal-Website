@@ -3,10 +3,6 @@
 import { FormEvent, useState } from "react";
 import { AgeIssue } from "./age-issue";
 
-type AssistantPanelProps = {
-  apiBaseUrl?: string;
-};
-
 type Message = {
   id: number;
   role: "assistant" | "visitor";
@@ -19,12 +15,7 @@ type ChatResponse = {
   message?: string;
 };
 
-function apiUrl(apiBaseUrl: string, path: string) {
-  return `${apiBaseUrl.replace(/\/$/, "")}${path}`;
-}
-
-export function AssistantPanel({ apiBaseUrl }: AssistantPanelProps) {
-  const baseUrl = apiBaseUrl ?? "";
+export function AssistantPanel() {
   const [isOpen, setIsOpen] = useState(false);
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState<Message[]>([
@@ -54,7 +45,7 @@ export function AssistantPanel({ apiBaseUrl }: AssistantPanelProps) {
     setIsSending(true);
 
     try {
-      const response = await fetch(apiUrl(baseUrl, "/api/chat"), {
+      const response = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ message: question }),
@@ -91,7 +82,13 @@ export function AssistantPanel({ apiBaseUrl }: AssistantPanelProps) {
         Ask the editor
       </button>
 
-      <div className={`assistant-backdrop${isOpen ? " is-open" : ""}`} onClick={() => setIsOpen(false)} />
+      <button
+        className={`assistant-backdrop${isOpen ? " is-open" : ""}`}
+        type="button"
+        onClick={() => setIsOpen(false)}
+        aria-label="Close portfolio assistant"
+        tabIndex={isOpen ? 0 : -1}
+      />
       <aside
         className={`assistant-sidebar${isOpen ? " is-open" : ""}`}
         id="portfolio-assistant"
@@ -125,11 +122,11 @@ export function AssistantPanel({ apiBaseUrl }: AssistantPanelProps) {
             id="assistant-question"
             value={message}
             onChange={(event) => setMessage(event.target.value)}
-            placeholder={apiBaseUrl ? "Ask a question…" : "Assistant is being connected…"}
+            placeholder="Ask a question…"
             rows={2}
-            disabled={!apiBaseUrl || isSending}
+            disabled={isSending}
           />
-          <button type="submit" disabled={!apiBaseUrl || !message.trim() || isSending}>Send <span aria-hidden="true">↑</span></button>
+          <button type="submit" disabled={!message.trim() || isSending}>Send <span aria-hidden="true">↑</span></button>
         </form>
         {error && <p className="assistant-error" role="alert">{error}</p>}
       </aside>
