@@ -251,9 +251,9 @@ export function CoverReader() {
       <div className="reader-glyph" aria-hidden="true">始</div>
       <div className="reader-spine" aria-hidden="true"><span>ISSUE <AgeIssue /></span><span>AKSHAT KADAM</span><span>始まり</span></div>
       <div className="reader-topline"><span>AKSHAT KADAM · ISSUE <AgeIssue /></span><span>SCROLL TO OPEN</span></div>
-      <div className="reader-chapter chapter-origin"><span>01</span><strong>Origin</strong><p>THE MAKING OF A BUILDER</p></div>
-      <div className="reader-chapter chapter-builder"><span>02</span><strong>Builder</strong><p>Ideas in motion</p></div>
-      <div className="reader-chapter chapter-now"><span>03</span><strong>Now</strong><p>The current chapter</p></div>
+      <div className="reader-chapter chapter-origin"><span>01</span><strong>My Story</strong><p>Talking points at a party</p></div>
+      <div className="reader-chapter chapter-builder"><span>02</span><strong>9–5</strong><p>Hustle and Bustle</p></div>
+      <div className="reader-chapter chapter-now"><span>03</span><strong>5–9</strong><p>What&apos;s not in my Resume</p></div>
       <div className="scroll-meter" aria-hidden="true"><i /></div>
       <div className="page-corner" aria-hidden="true"><span>OPEN</span><i>↘</i></div>
       <h1 className="sr-only" id="cover-title">Akshat Kadam — Personal archive, issue <AgeIssue /></h1>
