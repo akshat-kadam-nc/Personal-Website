@@ -34,6 +34,7 @@ yarn-error.log*
 
 # env files (can opt-in for committing if needed)
 .env*
+!.env.example
 
 # vercel
 .vercel
@@ -42,3 +43,6 @@ yarn-error.log*
 /.wrangler/
 /outputs/
 /work/
+
+# local source artwork; deployable WebP assets live in /public
+/images/

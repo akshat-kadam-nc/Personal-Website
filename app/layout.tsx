@@ -1,32 +1,33 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Source_Serif_4 } from "next/font/google";
+import { DM_Sans, Fraunces, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
 
-const geist = Geist({
-  variable: "--font-geist",
+const sans = DM_Sans({
+  variable: "--font-sans",
   subsets: ["latin"],
 });
 
-const geistMono = Geist_Mono({
+const mono = IBM_Plex_Mono({
   variable: "--font-mono",
   subsets: ["latin"],
+  weight: ["400", "600", "700"],
 });
 
-const sourceSerif = Source_Serif_4({
-  variable: "--font-serif",
+const display = Fraunces({
+  variable: "--font-display",
   subsets: ["latin"],
-  weight: ["400", "500", "600"],
+  weight: ["500", "600", "700", "800", "900"],
 });
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://akshatkadam.com"),
-  title: "Akshat Kadam — Technology, Education & India–Japan",
+  title: "Akshat Kadam — Personal Archive",
   description:
-    "Akshat Kadam is an entrepreneur, technologist, and product builder working across education, AI, and India–Japan technology.",
+    "Akshat Kadam is an entrepreneur, technologist, and product builder working across education, AI, software, and new ventures.",
   openGraph: {
     title: "Akshat Kadam",
     description:
-      "Entrepreneur, technologist, and product builder working across education, AI, and India–Japan technology.",
+      "Entrepreneur, technologist, and product builder working across education, AI, software, and new ventures.",
     url: "/",
     siteName: "Akshat Kadam",
     type: "website",
@@ -38,7 +39,7 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en">
-      <body className={`${geist.variable} ${geistMono.variable} ${sourceSerif.variable}`}>
+      <body className={`${sans.variable} ${mono.variable} ${display.variable}`}>
         {children}
       </body>
     </html>
