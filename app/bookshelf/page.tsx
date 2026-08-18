@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
-import { Bookshelf } from "./bookshelf";
+import { RecRoom } from "./rec-room";
 
 export const metadata: Metadata = {
-  title: "Bookshelf — Akshat Kadam",
-  description: "Akshat Kadam's shelf of recommendations, ideas, interests, and side stories.",
+  title: "The Rec Room — Akshat Kadam",
+  description: "Akshat Kadam's interactive recreation room for writing, recommendations, games, and collected curiosities.",
 };
 
 export default function BookshelfPage() {
-  return <Bookshelf />;
+  return <RecRoom />;
 }
