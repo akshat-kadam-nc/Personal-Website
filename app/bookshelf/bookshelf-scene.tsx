@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import * as THREE from "three";
 import { libraryVolumes, type LibraryVolume } from "./library-data";
 
@@ -32,6 +32,7 @@ function spineTexture(volume: LibraryVolume) {
 
 export function BookshelfScene({ cabinet, onSelect, selectedId }: Props) {
   const mountRef = useRef<HTMLDivElement>(null);
+  const [webglUnavailable, setWebglUnavailable] = useState(false);
   const cabinetRef = useRef(cabinet);
   const selectedRef = useRef(selectedId);
   useEffect(() => { cabinetRef.current = cabinet; }, [cabinet]);
@@ -44,7 +45,14 @@ export function BookshelfScene({ cabinet, onSelect, selectedId }: Props) {
     scene.background = new THREE.Color(0x101010);
     const camera = new THREE.PerspectiveCamera(34, 1, .1, 100);
     camera.position.set(0, .15, 12.8);
-    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false, powerPreference: "high-performance" });
+    let renderer: THREE.WebGLRenderer;
+    try {
+      renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false, powerPreference: "high-performance" });
+    } catch {
+      queueMicrotask(() => setWebglUnavailable(true));
+      return;
+    }
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     renderer.setPixelRatio(Math.min(devicePixelRatio, 1.7));
     renderer.outputColorSpace = THREE.SRGBColorSpace;
     renderer.domElement.className = "library-webgl";
@@ -118,17 +126,18 @@ export function BookshelfScene({ cabinet, onSelect, selectedId }: Props) {
     let frame = 0; let disposed = false;
     const render = () => {
       const targetX = -cabinetRef.current * 9;
-      world.position.x += (targetX - world.position.x) * .075;
+      world.position.x += (targetX - world.position.x) * (reducedMotion ? 1 : .075);
       books.forEach((book) => {
         const selected = selectedRef.current === book.volume.id;
         const targetZ = selected ? 3.2 : book.home.z;
         const targetXBook = book.home.x + (selected ? .32 : 0);
-        book.mesh.position.z += (targetZ - book.mesh.position.z) * .1;
-        book.mesh.position.x += (targetXBook - book.mesh.position.x) * .1;
-        book.mesh.rotation.y += ((selected ? -.52 : 0) - book.mesh.rotation.y) * .09;
-        book.mesh.rotation.z += ((selected ? -.08 : 0) - book.mesh.rotation.z) * .09;
+        const easing = reducedMotion ? 1 : .1;
+        book.mesh.position.z += (targetZ - book.mesh.position.z) * easing;
+        book.mesh.position.x += (targetXBook - book.mesh.position.x) * easing;
+        book.mesh.rotation.y += ((selected ? -.52 : 0) - book.mesh.rotation.y) * (reducedMotion ? 1 : .09);
+        book.mesh.rotation.z += ((selected ? -.08 : 0) - book.mesh.rotation.z) * (reducedMotion ? 1 : .09);
       });
-      camera.position.x = Math.sin(performance.now() * .00025) * .08;
+      camera.position.x = reducedMotion ? 0 : Math.sin(performance.now() * .00025) * .08;
       camera.lookAt(0, 0, 0); renderer.render(scene, camera);
       if (!disposed) frame = requestAnimationFrame(render);
     };
@@ -139,5 +148,6 @@ export function BookshelfScene({ cabinet, onSelect, selectedId }: Props) {
       geometries.forEach((geometry) => geometry.dispose()); materials.forEach((material) => material.dispose()); textures.forEach((texture) => texture.dispose()); renderer.dispose(); renderer.domElement.remove();
     };
   }, [onSelect]);
+  if (webglUnavailable) return <div className="library-scene library-static" aria-label="Illustrated library bookshelf"><span>THE LIBRARY</span>{Array.from({ length: 36 }, (_, index) => <i key={index} style={{ height: `${62 + (index % 5) * 5}%` }} />)}</div>;
   return <div className="library-scene" ref={mountRef} aria-label="Three-dimensional library bookshelf" />;
 }
