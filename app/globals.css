@@ -82,5 +82,8 @@ main{overflow-x:clip;overflow-y:visible}
 .projects-hero h1{font-family:var(--display);font-size:clamp(5rem,12vw,12rem);font-weight:900;line-height:.64}.project-dossier h2{font-family:var(--display);font-size:clamp(3rem,6vw,7rem);font-weight:900;line-height:.73}.project-strip{font-family:var(--sans);font-size:clamp(1.2rem,2.5vw,2.5rem);font-weight:900;line-height:1}
 @media(max-width:850px){.projects-hero h1{font-size:clamp(4rem,20vw,7rem)}}
 
+/* Chapter 01 artwork keeps its complete native 2:3 composition at every size. */
+.life-panels{max-width:1440px;margin-inline:auto}.life-panel,.life-panel:nth-child(2),.life-panel:nth-child(3){grid-template-rows:auto auto}.life-panel-image{aspect-ratio:2/3}.life-panel-image img,.life-panel:nth-child(1) .life-panel-image img,.life-panel:nth-child(2) .life-panel-image img,.life-panel:nth-child(3) .life-panel-image img{object-fit:contain;object-position:center}
+
 .shelf-hero h1{font-size:clamp(4.5rem,10vw,10rem)}
 @media(max-width:600px){.shelf-hero h1{font-size:clamp(4rem,21vw,6rem)}}
