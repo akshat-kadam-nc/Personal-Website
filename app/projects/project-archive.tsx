@@ -16,7 +16,7 @@ export function ProjectArchive() {
   const [active, setActive] = useState(0);
   const drawer = drawers[active];
   return <main className="projects-page">
-    <header className="projects-nav"><Link className="issue-mark" href="/" aria-label="Akshat Kadam, home">AK<span>!</span></Link><p>PERSONAL ARCHIVE / OFF-HOURS WORK</p><nav><Link href="/bookshelf">Bookshelf</Link><Link href="/">← Main issue</Link></nav></header>
+    <header className="projects-nav"><Link className="issue-mark" href="/" aria-label="Akshat Kadam, home"><img src="/favicon.svg" alt="" /></Link><p>PERSONAL ARCHIVE / OFF-HOURS WORK</p><nav><Link href="/bookshelf">Bookshelf</Link><Link href="/">← Main issue</Link></nav></header>
     <section className="projects-hero">
       <div><p>5–9 / PERSONAL PROJECTS</p><h1>THE<br /><span>WORKSHOP</span></h1></div>
       <p>This is the work outside the company story: prototypes, side quests, failed attempts, useful tools, and whatever seemed worth making next.</p>

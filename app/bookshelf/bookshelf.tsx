@@ -20,7 +20,7 @@ export function Bookshelf() {
   const currentPost = selected?.source === "SUBSTACK" ? substackPosts.find((post) => post.type === selected.id) ?? substackPosts[0] : undefined;
 
   return <main className="library-page">
-    <header className="library-nav"><Link className="issue-mark" href="/" aria-label="Akshat Kadam, home">AK<span>!</span></Link><p>PERSONAL ARCHIVE / THE LIBRARY</p><Link href="/">← Back to the story</Link></header>
+    <header className="library-nav"><Link className="issue-mark" href="/" aria-label="Akshat Kadam, home"><img src="/favicon.svg" alt="" /></Link><p>PERSONAL ARCHIVE / THE LIBRARY</p><Link href="/">← Back to the story</Link></header>
     <section className="library-header"><div><p>SIDE STORY 01 / THE PERSONAL CANON</p><h1>THE LIBRARY</h1></div><p>Essays, philosophies, and notes arrive from Substack. Everything else is catalogued here.</p></section>
     <section className="library-stage" aria-label="Akshat's library">
       <BookshelfScene cabinet={cabinet} onSelect={selectVolume} selectedId={selected?.id ?? null} />
