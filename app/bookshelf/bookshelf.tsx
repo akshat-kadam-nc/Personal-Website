@@ -63,7 +63,10 @@ export function Bookshelf() {
         <div className="reading-page"><div className="reading-meta"><span>{selected.type}</span><span>{selected.source === "SUBSTACK" ? "SYNCED FROM SUBSTACK" : "CURATED LOCALLY"}</span></div><p>{selected.kicker}</p><h2>{currentPost?.title ?? selected.title}</h2><div className="reading-rule"><span>{selected.number}</span></div>{currentPost ? <p className="reading-summary">{currentPost.summary}</p> : <ol>{selected.notes.map((note, index) => <li key={note}><span>0{index + 1}</span>{note}</li>)}</ol>}{currentPost ? <a className="reading-action" href={currentPost.link} target="_blank" rel="noreferrer">READ ON SUBSTACK ↗</a> : selected.source === "SUBSTACK" ? <span className="reading-status">ADD SUBSTACK_FEED_URL TO SYNC</span> : <span className="reading-status">CATALOGUE IN PROGRESS</span>}</div>
       </article>}
     </section>
-    <section className="library-index"><p>CATALOGUE / 12 FEATURED VOLUMES</p><div>{libraryVolumes.map((volume) => <button key={volume.id} type="button" onClick={() => { setCabinet(volume.cabinet); window.setTimeout(() => selectVolume(volume), 420); }}><span>{volume.number}</span><strong>{volume.title}</strong><i>{volume.source}</i></button>)}</div></section>
+    <section className="library-index">
+      <div className="catalogue-heading"><div><p>THE CARD CATALOGUE</p><h2>FIND A VOLUME</h2></div><p>Every marked cover has a story inside. Browse the drawers or pull one directly from the shelf.</p></div>
+      <div className="catalogue-drawer">{libraryVolumes.map((volume) => <button className={`catalogue-card catalogue-${volume.color}`} key={volume.id} type="button" onClick={() => { setCabinet(volume.cabinet); window.setTimeout(() => selectVolume(volume), 420); }}><i aria-hidden="true">{volume.number}</i><span>VOL. {volume.number}</span><strong>{volume.title}</strong><small>{cabinetNames[volume.cabinet]} · {volume.source === "SUBSTACK" ? "SUBSTACK" : "CURATED"}</small></button>)}</div>
+    </section>
     <footer className="shelf-footer"><span>図書館 / TOSHOKAN</span><p>MORE SHELVES.<br />MORE SIDE STORIES.</p><Link href="/">Return to Issue →</Link></footer>
   </main>;
 }
