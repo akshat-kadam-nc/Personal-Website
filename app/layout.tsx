@@ -21,6 +21,12 @@ const display = Fraunces({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://akshatkadam.com"),
+  manifest: "/manifest.webmanifest",
+  icons: {
+    icon: [{ url: "/favicon.svg", type: "image/svg+xml" }],
+    shortcut: "/favicon.svg",
+    apple: "/favicon.svg",
+  },
   title: "Akshat Kadam — Personal Archive",
   description:
     "Akshat Kadam is an entrepreneur, technologist, and product builder working across education, AI, software, and new ventures.",
