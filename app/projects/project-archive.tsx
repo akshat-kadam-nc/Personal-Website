@@ -13,16 +13,16 @@ type Project = (typeof projects)[number];
 
 function Cover({project,active,offset,onSelect,onNavigate}:{project:Project;active:boolean;offset:number;onSelect:()=>void;onNavigate:(direction:number)=>void}) {
   const style={"--offset":offset,"--depth":Math.abs(offset)} as CSSProperties;
-  const art=project.id==="rec-room"?"/rec-room-window-desktop.webp":project.id==="dayforge"?"/projects-dayforge-bg.webp":"/projects-pokemon-destiny-map.webp";
+  const art=project.id==="rec-room"?"/projects-cover-rec-room-v2.webp":project.id==="dayforge"?"/projects-cover-dayforge-v2.webp":"/projects-cover-pokemon-destiny-v2.webp";
   return <button className={"quest-cover quest-cover--"+project.id+(active?" is-active":"")} style={style} onClick={onSelect} onKeyDown={event=>{if(event.key==="ArrowLeft")onNavigate(-1);if(event.key==="ArrowRight")onNavigate(1)}} aria-pressed={active}>
     <span className="cover-issue">SIDE QUEST / {project.issue}</span><span className="cover-art" aria-hidden="true"><Image src={art} alt="" fill sizes="(max-width: 700px) 68vw, 30vw"/></span><strong>{project.title}</strong><span className="cover-status">{project.status}</span>
   </button>;
 }
 
 function ChapterArt({project}:{project:Project}) {
-  if(project.id==="rec-room") return <div className="chapter-art rec-room-art"><Image src="/rec-room-diorama-desktop.webp" alt="A miniature recreation room with books, records, games, and a writing desk" fill sizes="(max-width: 900px) 100vw, 64vw"/><span>ROOM 01</span><div className="chapter-insets" aria-hidden="true"><i/><i/><i/></div></div>;
-  if(project.id==="dayforge") return <div className="chapter-art dayforge-art"><Image src="/projects-dayforge-bg.webp" alt="Dayforge interface artwork" fill sizes="(max-width: 900px) 100vw, 64vw"/><div className="dayforge-dial"><b>24</b><span>HOURS<br/>IN VIEW</span></div><Image className="dayforge-mark" src="/projects-dayforge-wordmark.webp" alt="Dayforge" width={360} height={100}/><div className="time-shards" aria-hidden="true"><i>00:25:00</i><i>15 / TODAY</i></div></div>;
-  return <div className="chapter-art destiny-art"><Image src="/projects-pokemon-destiny-map.webp" alt="Map from the Volua region in Pokémon Destiny" fill sizes="(max-width: 900px) 100vw, 64vw"/><Image className="destiny-mark" src="/projects-pokemon-destiny-title.webp" alt="Pokémon Destiny" width={420} height={190}/><span>VOLUA REGION</span><div className="route-line" aria-hidden="true"><i/><i/><i/><i/></div></div>;
+  if(project.id==="rec-room") return <div className="chapter-art rec-room-art"><Image src="/projects-spread-rec-room-v2.webp" alt="A miniature recreation room with books, records, games, and a writing desk" fill sizes="(max-width: 900px) 100vw, 64vw"/><span>ROOM 01</span><div className="chapter-insets" aria-hidden="true"><i/><i/><i/></div></div>;
+  if(project.id==="dayforge") return <div className="chapter-art dayforge-art"><Image src="/projects-spread-dayforge-v2.webp" alt="Dayforge interface artwork" fill sizes="(max-width: 900px) 100vw, 64vw"/><div className="dayforge-dial"><b>24</b><span>HOURS<br/>IN VIEW</span></div><Image className="dayforge-mark" src="/projects-dayforge-wordmark.webp" alt="Dayforge" width={360} height={100}/><div className="time-shards" aria-hidden="true"><i>00:25:00</i><i>15 / TODAY</i></div></div>;
+  return <div className="chapter-art destiny-art"><Image src="/projects-spread-pokemon-destiny-v2.webp" alt="Map from the Volua region in Pokémon Destiny" fill sizes="(max-width: 900px) 100vw, 64vw"/><Image className="destiny-mark" src="/projects-pokemon-destiny-title.webp" alt="Pokémon Destiny" width={420} height={190}/><span>VOLUA REGION</span><div className="route-line" aria-hidden="true"><i/><i/><i/><i/></div></div>;
 }
 
 export function ProjectArchive() {

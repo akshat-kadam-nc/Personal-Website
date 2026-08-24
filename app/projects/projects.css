@@ -44,3 +44,30 @@
 
 
 .projects-skip{position:fixed;z-index:100;top:8px;left:8px;transform:translateY(-150%);background:#eee5d0;color:#151412;border:3px solid #151412;padding:12px 16px;font:900 11px/1 var(--font-mono)}.projects-skip:focus{transform:translateY(0)}.projects-page button,.projects-page a{touch-action:manipulation;-webkit-tap-highlight-color:#d6473244}.projects-page :is(a,button):focus-visible{outline:3px solid var(--red);outline-offset:4px}.quest-heading h1,.chapter-copy h2{text-wrap:balance}.project-chapter{scroll-margin-top:20px}.chapter-copy p{text-wrap:pretty}@supports(padding:max(0px)){.projects-nav{padding-left:max(clamp(18px,4vw,64px),env(safe-area-inset-left));padding-right:max(clamp(18px,4vw,64px),env(safe-area-inset-right))}}
+
+/* V3: reference-faithful physical manga volumes */
+.quest-cover{overflow:visible;border:3px solid #d8ccb4;background:#eee5d0;transform-style:preserve-3d;box-shadow:20px 26px 55px #000e,0 0 0 1px #080807}
+.quest-cover .cover-art{inset:0;overflow:hidden;background:#eee5d0}.quest-cover .cover-art img{object-fit:cover;filter:grayscale(1) contrast(1.08);mix-blend-mode:multiply}
+.quest-cover:after{content:"";position:absolute;z-index:-1;inset:5px -18px 5px auto;width:18px;background:repeating-linear-gradient(90deg,#e5dac3 0 3px,#1a1815 4px 5px);transform:rotateY(36deg);transform-origin:left;box-shadow:none}
+.quest-cover:before,.quest-cover--dayforge:before,.quest-cover--pokemon-destiny:before{content:"";position:absolute;z-index:4;left:0;top:0;bottom:0;width:12px;background:repeating-linear-gradient(90deg,#171512 0 2px,#eee5d0 2px 4px);border:0;border-radius:0;box-shadow:none}
+.cover-issue{top:18px;left:26px;background:#eee5d0e8;border:2px solid #151412;color:#151412;padding:7px 9px}
+.quest-cover>strong{top:58px;bottom:auto;left:26px;right:20px;color:#111;font-size:clamp(54px,6.3vw,94px);line-height:.76;text-shadow:none;letter-spacing:-.07em;mix-blend-mode:multiply}
+.quest-cover--pokemon-destiny>strong{font-size:clamp(44px,5.2vw,78px);line-height:.8}.quest-cover--dayforge>strong{font-size:clamp(56px,6.7vw,100px)}
+.cover-status{left:26px;bottom:20px;background:#151412;color:#eee5d0;padding:8px 10px;letter-spacing:.12em}
+.quest-cover.is-active{box-shadow:26px 32px 65px #000f,0 0 0 2px #f2e8d3}.quest-cover.is-active .cover-art img{filter:grayscale(1) contrast(1.14)}
+
+
+/* Project-specific spread geometry from the approved references */
+.project-chapter--dayforge,.project-chapter--pokemon-destiny{position:relative;display:block;min-height:100svh;overflow:hidden}
+.project-chapter--dayforge .chapter-art,.project-chapter--pokemon-destiny .chapter-art{position:absolute;inset:0;min-height:100%;border:0;clip-path:none}
+.project-chapter--dayforge .chapter-art>img:first-child{opacity:.42;object-fit:cover}.project-chapter--dayforge .dayforge-dial{left:68%;top:48%;width:min(54vw,690px);border-width:clamp(28px,4vw,62px)}.project-chapter--dayforge .dayforge-mark{display:none}.project-chapter--dayforge .chapter-copy{position:relative;z-index:10;width:min(38vw,560px);min-height:100svh;padding:clamp(65px,8vh,100px) 25px 50px clamp(34px,6vw,90px);background:linear-gradient(90deg,#eee5d0 76%,transparent)}.project-chapter--dayforge .chapter-copy h2{font-size:clamp(80px,10vw,155px);margin:32px 0 24px}.project-chapter--dayforge .time-shards i:first-child{left:43%;bottom:7%}
+.project-chapter--pokemon-destiny .chapter-art>img:first-child{object-fit:cover;filter:grayscale(1) contrast(1.18);opacity:.92}.project-chapter--pokemon-destiny .destiny-mark{left:21%;bottom:auto;top:10%;width:min(36vw,520px);filter:grayscale(1) contrast(1.8);mix-blend-mode:multiply}.project-chapter--pokemon-destiny .chapter-copy{position:relative;z-index:10;margin-left:auto;width:min(31vw,465px);min-height:100svh;padding:clamp(55px,7vh,88px) clamp(28px,3vw,50px);background:#eee5d0e8;border-left:5px solid #151412}.project-chapter--pokemon-destiny .chapter-copy h2{font-size:clamp(52px,5.5vw,84px);margin:26px 0}.project-chapter--pokemon-destiny .route-line{left:24%;right:29%;top:28%;height:45%}
+.project-chapter--rec-room .chapter-copy{border-left:0}.project-chapter--rec-room .chapter-art{clip-path:none}.project-chapter--rec-room .rec-room-art:after{border-width:8px}.project-chapter--rec-room .chapter-insets{height:39%;bottom:0}
+@media(max-width:900px){.project-chapter--dayforge,.project-chapter--pokemon-destiny{display:grid;min-height:auto}.project-chapter--dayforge .chapter-art,.project-chapter--pokemon-destiny .chapter-art{position:relative;min-height:62svh}.project-chapter--dayforge .chapter-copy,.project-chapter--pokemon-destiny .chapter-copy{width:auto;min-height:auto;margin:0;padding:48px 24px 58px;background:#eee5d0;border-left:0}.project-chapter--dayforge .dayforge-dial{left:63%;width:min(68vw,540px)}.project-chapter--pokemon-destiny .destiny-mark{left:28%;top:8%;width:min(52vw,420px)}}
+
+
+/* V4: production spreads already contain their intended manga panel composition */
+.project-chapter--rec-room{position:relative;display:block;min-height:100svh;overflow:hidden}.project-chapter--rec-room .chapter-art{position:absolute;inset:0;min-height:100%;border:0}.project-chapter--rec-room .chapter-art>img:first-child{object-fit:cover;filter:none}.project-chapter--rec-room .chapter-copy{position:relative;z-index:10;margin-left:auto;width:min(30vw,455px);min-height:100svh;padding:clamp(52px,7vh,86px) clamp(28px,3vw,48px);background:#eee5d0f0;border-left:5px solid #151412}
+.chapter-insets,.time-shards,.project-chapter--dayforge .dayforge-dial,.project-chapter--dayforge .dayforge-mark,.project-chapter--pokemon-destiny .route-line{display:none}
+.project-chapter--dayforge .chapter-art>img:first-child{opacity:1;filter:none}.project-chapter--pokemon-destiny .chapter-art>img:first-child{filter:none;opacity:1}
+@media(max-width:900px){.project-chapter--rec-room{display:grid;min-height:auto}.project-chapter--rec-room .chapter-art{position:relative;min-height:62svh}.project-chapter--rec-room .chapter-copy{width:auto;min-height:auto;margin:0;padding:48px 24px 58px;background:#eee5d0;border-left:0}}
