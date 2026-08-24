@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import { ProjectArchive } from "./project-archive";
+import "./projects.css";
 
 export const metadata: Metadata = {
   title: "Personal Projects — Akshat Kadam",
-  description: "Side projects, prototypes, game-development attempts, and experiments from Akshat Kadam.",
+  description: "Rec Room, Dayforge, and Pokémon Destiny: significant personal projects by Akshat Kadam.",
 };
 
 export default function ProjectsPage() {
