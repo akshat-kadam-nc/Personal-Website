@@ -27,7 +27,7 @@ export const metadata: Metadata = {
     shortcut: "/favicon.svg",
     apple: "/favicon.svg",
   },
-  title: "Akshat Kadam — Personal Archive",
+  title: "Akshat Kadam | Personal Archive",
   description:
     "Akshat Kadam is an entrepreneur, technologist, and product builder working across education, AI, software, and new ventures.",
   openGraph: {

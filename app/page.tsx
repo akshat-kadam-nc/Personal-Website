@@ -5,10 +5,11 @@ import { AfterHours } from "./after-hours";
 import { CoverReader } from "./cover-reader";
 import "./home-95.css";
 import "./home-59.css";
+import "./home-inner-life.css";
 
 const ventures = [
   { name: "DeveLearn", tag: "EDUCATION", copy: "Technology education, training, and academic programs across AI, data, software, and cybersecurity.", image: "/home-95-develearn.webp", href: "https://develearn.in" },
-  { name: "Next Platforms", tag: "SOFTWARE / AI", copy: "Software development, cloud applications, and AI systems for teams and organizations across markets.", image: "/home-95-next-platforms.webp", href: "https://nextplatforms.in" },
+  { name: "Next Platforms", tag: "SOFTWARE / AI", copy: "Software development, cloud applications, and AI systems for teams and organizations across markets.", image: "/home-95-next-platforms-startup.webp", href: "https://nextplatforms.in" },
   { name: "Zuma", tag: "LEARNING", copy: "Building toward more personal, intelligent learning experiences for school students.", image: "/home-95-zuma.webp", href: "https://zuma.co.in" },
 ];
 
@@ -17,7 +18,7 @@ const chapterOne = [
     label: "THE CHILDHOOD ARC",
     title: "Curiosity learns its shape.",
     place: "SCHOOL → IIT BOMBAY",
-    copy: "Growing up and studying in Mumbai, then college at IIT Bombay—the years that turned curiosity into discipline and made building feel possible.",
+    copy: "Growing up and studying in Mumbai, then college at IIT Bombay. Those years turned curiosity into discipline and made building feel possible.",
     image: "/chapter-1-left.webp",
   },
   {
@@ -31,7 +32,7 @@ const chapterOne = [
     label: "THE ADULT CHAPTER",
     title: "Building on my own terms.",
     place: "INDIA · NOW",
-    copy: "The current chapter is based in India—building companies, products, and experiments across education, software, and AI.",
+    copy: "The current chapter is based in India, building companies, products, and experiments across education, software, and AI.",
     image: "/chapter-1-right.webp",
   },
 ];
@@ -48,11 +49,24 @@ export default function Home() {
           <Image src={venture.image} alt="" fill sizes={index === 1 ? "46vw" : "30vw"} />
           <div className="work-front-copy"><span>0{index + 1} / {venture.tag}</span><h3>{venture.name}</h3><p>{venture.copy}</p><a href={venture.href} target="_blank" rel="noreferrer">Visit website <i aria-hidden="true">↗</i></a></div>
         </article>)}
-        <div className="work-ink-rupture" aria-hidden="true" />
       </div>
     </section>
     <AfterHours />
-    <section className="interlude" aria-labelledby="interlude-title"><p className="chapter-label">EXTRA PAGES / INNER LIFE</p><h2 id="interlude-title">Manga. Anime.<br />Pokémon. <em>Always.</em></h2><p>The things that make a life vivid belong in the record too. This issue will keep growing—new projects, new places, and side stories included.</p><span className="interlude-sound">ドン!</span></section>
+    <section className="interlude inner-life" aria-labelledby="interlude-title">
+      <Image
+        className="inner-life-art"
+        src="/home-inner-life-nika.webp"
+        alt="Nika floating beneath a night sky filled with lanterns"
+        fill
+        sizes="100vw"
+      />
+      <div className="inner-life-ink" aria-hidden="true" />
+      <div className="inner-life-copy">
+        <p className="chapter-label" id="interlude-title">EXTRA PAGES / INNER LIFE</p>
+        <p>This issue will keep growing: new projects, new places, and side stories included.</p>
+      </div>
+      <span className="interlude-sound" aria-hidden="true">ドン!</span>
+    </section>
     <AssistantPanel />
     <footer className="issue-footer" id="contact"><div><p>AKSHAT KADAM</p><span>ENTREPRENEUR · TECHNOLOGIST</span></div><p>THE STORY IS STILL<br />BEING DRAWN.</p><div className="footer-links"><a href="mailto:hello@akshatkadam.com">Email ↗</a><a href="#top">Back to cover ↑</a></div></footer>
   </main>;

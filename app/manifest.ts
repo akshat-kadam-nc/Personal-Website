@@ -2,7 +2,7 @@ import type { MetadataRoute } from "next";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "Akshat Kadam — Personal Archive",
+    name: "Akshat Kadam | Personal Archive",
     short_name: "Akshat Kadam",
     description:
       "Akshat Kadam's personal archive of work, projects, writing, and interests.",

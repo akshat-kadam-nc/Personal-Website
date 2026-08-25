@@ -1,0 +1,111 @@
+.inner-life.interlude {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  align-items: flex-end;
+  min-height: clamp(43rem, 70vw, 67.5rem);
+  padding: clamp(2rem, 5vw, 5rem);
+  overflow: hidden;
+  border-block: 2px solid var(--cream);
+  background: var(--ink);
+  color: var(--cream);
+}
+
+.inner-life.interlude::before {
+  content: none;
+}
+
+.inner-life-art {
+  z-index: -3;
+  object-fit: cover;
+  object-position: center;
+  filter: contrast(1.06);
+  transform: scale(1.015);
+  animation: inner-life-drift 18s ease-in-out infinite alternate;
+}
+
+.inner-life-ink {
+  position: absolute;
+  z-index: -2;
+  inset: 0;
+  background:
+    linear-gradient(90deg, rgba(7, 7, 8, .94) 0%, rgba(7, 7, 8, .6) 28%, transparent 57%),
+    linear-gradient(0deg, rgba(7, 7, 8, .68) 0%, transparent 35%);
+  pointer-events: none;
+}
+
+.inner-life-copy {
+  width: min(34rem, 46vw);
+  padding: clamp(1.25rem, 2.2vw, 2rem);
+  border-left: 3px solid var(--red);
+  background: rgba(9, 9, 10, .78);
+  box-shadow: 10px 10px 0 rgba(183, 47, 39, .82);
+  backdrop-filter: blur(2px);
+}
+
+.inner-life-copy .chapter-label {
+  margin: 0 0 clamp(1.1rem, 2vw, 1.8rem);
+  color: var(--red);
+}
+
+.inner-life-copy > p:last-child {
+  margin: 0;
+  max-width: 30rem;
+  font: 600 clamp(1.35rem, 2.15vw, 2.35rem)/1.16 var(--display);
+  letter-spacing: -.025em;
+  text-wrap: balance;
+}
+
+.inner-life.interlude .interlude-sound {
+  right: clamp(1.5rem, 5vw, 5rem);
+  top: clamp(1.5rem, 5vw, 5rem);
+  color: var(--cream);
+  font-size: clamp(3rem, 7vw, 7rem);
+  opacity: .84;
+  text-shadow: 5px 5px 0 var(--red);
+  transform: rotate(7deg);
+}
+
+@keyframes inner-life-drift {
+  from { transform: scale(1.015) translate3d(0, 0, 0); }
+  to { transform: scale(1.045) translate3d(-.6%, -.5%, 0); }
+}
+
+@media (max-width: 800px) {
+  .inner-life.interlude {
+    align-items: flex-end;
+    min-height: 47rem;
+    padding: 1.25rem;
+  }
+
+  .inner-life-art {
+    object-position: 69% center;
+  }
+
+  .inner-life-ink {
+    background: linear-gradient(0deg, rgba(7, 7, 8, .97) 0%, rgba(7, 7, 8, .72) 32%, transparent 65%);
+  }
+
+  .inner-life-copy {
+    width: 100%;
+    padding: 1.15rem;
+    box-shadow: 6px 6px 0 rgba(183, 47, 39, .88);
+  }
+
+  .inner-life-copy > p:last-child {
+    font-size: clamp(1.3rem, 6vw, 1.8rem);
+  }
+
+  .inner-life.interlude .interlude-sound {
+    right: 1.25rem;
+    top: 1.5rem;
+    font-size: 3.8rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .inner-life-art {
+    animation: none;
+    transform: scale(1.015);
+  }
+}

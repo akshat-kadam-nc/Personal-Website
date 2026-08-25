@@ -8,6 +8,7 @@ import * as THREE from "three";
 type PanelRig = { frame: THREE.Mesh; hero?: THREE.Mesh; home: THREE.Vector3; mesh: THREE.Mesh; rotation: number; size: THREE.Vector2; spread: THREE.Vector3 };
 const clamp01 = (value: number) => Math.min(Math.max(value, 0), 1);
 const ease = (value: number) => { const progress = clamp01(value); return progress * progress * (3 - 2 * progress); };
+const coverRatioForPanel = (mobile: boolean) => mobile ? (1024 / 1535) * (3 / 2) : (1420 / 1104) * (2 / 3);
 
 export function CoverReader() {
   const readerRef = useRef<HTMLElement>(null);
@@ -19,6 +20,7 @@ export function CoverReader() {
     if (!reader || !stage) return;
 
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const mobileCover = window.matchMedia("(max-width: 800px)").matches;
     const scene = new THREE.Scene();
     scene.background = new THREE.Color(0xf2f0ea);
     const camera = new THREE.PerspectiveCamera(38, 1, 0.1, 100);
@@ -63,6 +65,11 @@ export function CoverReader() {
       [-0.08, 0.045, 0.2, -0.035], [0, 0.07, 0.06, 0.012], [0.08, 0.04, 0.17, 0.035],
       [-0.08, -0.035, 0.14, 0.028], [0, -0.065, 0.22, -0.012], [0.08, -0.045, 0.25, -0.035],
     ];
+    const mobileSpreadTargets = [
+      [-0.018, 0.018, 0.2, -0.018], [0.018, 0.016, 0.06, 0.014],
+      [-0.018, 0.004, 0.14, 0.012], [0.018, -0.004, 0.22, -0.012],
+      [-0.018, -0.018, 0.18, -0.014], [0.018, -0.018, 0.25, 0.018],
+    ];
     const assetRevision = "20260817-2";
     const heroSources = ["/hero-1.webp", "/hero-2.webp", "/hero-3.webp", "/hero-4.webp", "/hero-5.webp", "/hero-6.webp"]
       .map((source) => `${source}?v=${assetRevision}`);
@@ -77,11 +84,15 @@ export function CoverReader() {
       camera.updateProjectionMatrix();
       renderer.setSize(bounds.width, bounds.height, false);
       const visible = visibleSize();
-      const coverRatio = 1420 / 1104;
-      const coverWidth = Math.min(visible.width * 0.94, visible.height * 0.9 * coverRatio);
+      const columns = mobileCover ? 2 : 3;
+      const rows = mobileCover ? 3 : 2;
+      const coverRatio = mobileCover ? 1024 / 1535 : 1420 / 1104;
+      const coverWidth = mobileCover
+        ? visible.width * 0.96
+        : Math.min(visible.width * 0.94, visible.height * 0.9 * coverRatio);
       const coverHeight = coverWidth / coverRatio;
-      const tileWidth = coverWidth / 3;
-      const tileHeight = coverHeight / 2;
+      const tileWidth = coverWidth / columns;
+      const tileHeight = coverHeight / rows;
       pageShadow.scale.set(coverWidth * 1.025, coverHeight * 1.035, 1);
       pageShadow.position.set(coverWidth * 0.035, -coverHeight * 0.045, -0.24);
       pageShadow.rotation.z = -0.018;
@@ -92,32 +103,37 @@ export function CoverReader() {
       redSpine.position.set(-coverWidth * 0.515, -coverHeight * 0.005, -0.08);
       redSpine.rotation.z = 0.018;
       panels.forEach((panel, index) => {
-        const column = index % 3;
-        const row = Math.floor(index / 3);
+        const columns = mobileCover ? 2 : 3;
+        const rows = mobileCover ? 3 : 2;
+        const column = index % columns;
+        const row = Math.floor(index / columns);
         panel.size.set(tileWidth, tileHeight);
         panel.mesh.scale.set(tileWidth, tileHeight, 1);
         panel.hero?.scale.set(tileWidth, tileHeight, 1);
         panel.frame.scale.set(tileWidth * 1.025, tileHeight * 1.035, 1);
-        panel.home.set((column - 1) * tileWidth, row === 0 ? tileHeight / 2 : -tileHeight / 2, 0);
-        const target = spreadTargets[index];
+        panel.home.set((column - (columns - 1) / 2) * tileWidth, ((rows - 1) / 2 - row) * tileHeight, 0);
+        const target = mobileCover ? mobileSpreadTargets[index] : spreadTargets[index];
         panel.spread.set(target[0] * coverWidth, target[1] * coverHeight, target[2]);
         panel.rotation = target[3];
       });
     };
 
     const textureLoader = new THREE.TextureLoader();
-    textureLoader.load(`/akshat-kadam-cover.webp?v=${assetRevision}`, (sourceTexture) => {
+    const coverSource = mobileCover ? "/mobile-banner-main.webp" : "/akshat-kadam-cover.webp";
+    textureLoader.load(`${coverSource}?v=${assetRevision}`, (sourceTexture) => {
       if (disposed) { sourceTexture.dispose(); return; }
       sourceTexture.colorSpace = THREE.SRGBColorSpace;
       sourceTexture.minFilter = THREE.LinearFilter;
       sourceTexture.magFilter = THREE.LinearFilter;
       for (let index = 0; index < 6; index += 1) {
-        const column = index % 3;
-        const row = Math.floor(index / 3);
+        const columns = mobileCover ? 2 : 3;
+        const rows = mobileCover ? 3 : 2;
+        const column = index % columns;
+        const row = Math.floor(index / columns);
         const texture = sourceTexture.clone();
         texture.needsUpdate = true;
-        texture.repeat.set(1 / 3, 1 / 2);
-        texture.offset.set(column / 3, row === 0 ? 1 / 2 : 0);
+        texture.repeat.set(1 / columns, 1 / rows);
+        texture.offset.set(column / columns, 1 - (row + 1) / rows);
         const geometry = new THREE.PlaneGeometry(1, 1);
         const mesh = new THREE.Mesh(geometry, new THREE.MeshBasicMaterial({ map: texture, toneMapped: false }));
         const frame = new THREE.Mesh(new THREE.PlaneGeometry(1, 1), new THREE.MeshBasicMaterial({ color: 0x111111, transparent: true, opacity: 0 }));
@@ -132,7 +148,7 @@ export function CoverReader() {
           heroTexture.magFilter = THREE.LinearFilter;
           const image = heroTexture.image as { width?: number; height?: number };
           const imageRatio = (image.width ?? 1) / Math.max(image.height ?? 1, 1);
-          const panelRatio = (1420 / 1104) * (2 / 3);
+          const panelRatio = coverRatioForPanel(mobileCover);
           if (imageRatio > panelRatio) {
             heroTexture.repeat.x = panelRatio / imageRatio;
             heroTexture.offset.x = (1 - heroTexture.repeat.x) / 2;
@@ -164,7 +180,7 @@ export function CoverReader() {
       pointerY = (event.clientY / window.innerHeight - 0.5) * 2;
     };
     const render = () => {
-      const separation = reduceMotion ? 0 : ease((scrollProgress - 0.12) / 0.72);
+      const separation = reduceMotion ? 0 : ease((scrollProgress - 0.015) / 0.68);
       const float = reduceMotion ? 0 : ease((scrollProgress - 0.48) / 0.45);
       const approach = reduceMotion ? 0 : ease(scrollProgress / 0.28);
       const elapsed = performance.now() * 0.001;
@@ -187,7 +203,7 @@ export function CoverReader() {
         panel.mesh.position.copy(panel.home).addScaledVector(panel.spread, separation);
         panel.mesh.position.z += pulse;
         panel.mesh.rotation.z = panel.rotation * separation;
-        const panelScale = 1 - separation * 0.055;
+        const panelScale = 1 - separation * (mobileCover ? 0.14 : 0.055);
         panel.mesh.scale.set(panel.size.x * panelScale, panel.size.y * panelScale, 1);
         (panel.mesh.material as THREE.MeshBasicMaterial).opacity = 1 - imageMix;
         (panel.mesh.material as THREE.MeshBasicMaterial).transparent = imageMix > 0;
@@ -247,7 +263,7 @@ export function CoverReader() {
 
   return <section className="cover-reader" ref={readerRef} aria-labelledby="cover-title">
     <div className="cover-stage" ref={stageRef}>
-      <img className="cover-fallback" src="/akshat-kadam-cover.webp" alt="Illustrated manga cover introducing Akshat Kadam" />
+      <picture className="cover-fallback"><source media="(max-width: 800px)" srcSet="/mobile-banner-main.webp" /><img src="/akshat-kadam-cover.webp" alt="Illustrated manga cover introducing Akshat Kadam" /></picture>
       <div className="reader-glyph" aria-hidden="true">始</div>
       <div className="reader-spine" aria-hidden="true"><span>ISSUE <AgeIssue /></span><span>AKSHAT KADAM</span><span>始まり</span></div>
       <div className="reader-topline"><span>AKSHAT KADAM · ISSUE <AgeIssue /></span><span>SCROLL TO OPEN</span></div>
@@ -256,7 +272,7 @@ export function CoverReader() {
       <div className="reader-chapter chapter-now"><span>03</span><strong>5–9</strong><p>What&apos;s not in my Resume</p></div>
       <div className="scroll-meter" aria-hidden="true"><i /></div>
       <div className="page-corner" aria-hidden="true"><span>OPEN</span><i>↘</i></div>
-      <h1 className="sr-only" id="cover-title">Akshat Kadam — Personal archive, issue <AgeIssue /></h1>
+      <h1 className="sr-only" id="cover-title">Akshat Kadam | Personal archive, issue <AgeIssue /></h1>
     </div>
   </section>;
 }
