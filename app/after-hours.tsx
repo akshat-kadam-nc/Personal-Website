@@ -6,7 +6,7 @@ import { type CSSProperties, type PointerEvent as ReactPointerEvent, type TouchE
 const areas = [
   { label: "Fitness / lifting", share: 20, start: 0, end: 20 },
   { label: "Building side projects", share: 15, start: 20, end: 35, href: "/projects" },
-  { label: "Gaming, OTT and infotainment / YouTube", share: 30, start: 35, end: 65, href: "/bookshelf" },
+  { label: "Gaming, OTT and infotainment / YouTube", share: 30, start: 35, end: 65, href: "https://rec-room.life/akshat" },
   { label: "Exploring agentic AI, product systems, and new technical possibilities", share: 25, start: 65, end: 90 },
   { label: "Doomscrolling. A work in progress.", share: 10, start: 90, end: 100 },
 ] as const;

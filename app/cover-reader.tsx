@@ -2,7 +2,7 @@
 
 import { AgeIssue } from "./age-issue";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import * as THREE from "three";
 
 type PanelRig = { frame: THREE.Mesh; hero?: THREE.Mesh; home: THREE.Vector3; mesh: THREE.Mesh; rotation: number; size: THREE.Vector2; spread: THREE.Vector3 };
@@ -11,8 +11,17 @@ const ease = (value: number) => { const progress = clamp01(value); return progre
 const coverRatioForPanel = (mobile: boolean) => mobile ? (1024 / 1535) * (3 / 2) : (1420 / 1104) * (2 / 3);
 
 export function CoverReader() {
+  const [mobileCover, setMobileCover] = useState(() => typeof window !== "undefined" && window.matchMedia("(max-width: 800px)").matches);
   const readerRef = useRef<HTMLElement>(null);
   const stageRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const query = window.matchMedia("(max-width: 800px)");
+    const syncLayout = () => setMobileCover(query.matches);
+    syncLayout();
+    query.addEventListener("change", syncLayout);
+    return () => query.removeEventListener("change", syncLayout);
+  }, []);
 
   useEffect(() => {
     const reader = readerRef.current;
@@ -20,7 +29,6 @@ export function CoverReader() {
     if (!reader || !stage) return;
 
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const mobileCover = window.matchMedia("(max-width: 800px)").matches;
     const scene = new THREE.Scene();
     scene.background = new THREE.Color(0xf2f0ea);
     const camera = new THREE.PerspectiveCamera(38, 1, 0.1, 100);
@@ -259,7 +267,7 @@ export function CoverReader() {
       renderer.dispose();
       renderer.domElement.remove();
     };
-  }, []);
+  }, [mobileCover]);
 
   return <section className="cover-reader" ref={readerRef} aria-labelledby="cover-title">
     <div className="cover-stage" ref={stageRef}>

@@ -6,6 +6,7 @@ import { CoverReader } from "./cover-reader";
 import "./home-95.css";
 import "./home-59.css";
 import "./home-inner-life.css";
+import "./home-nav.css";
 
 const ventures = [
   { name: "DeveLearn", tag: "EDUCATION", copy: "Technology education, training, and academic programs across AI, data, software, and cybersecurity.", image: "/home-95-develearn.webp", href: "https://develearn.in" },
@@ -39,7 +40,15 @@ const chapterOne = [
 
 export default function Home() {
   return <main id="top">
-    <header className="issue-nav" aria-label="Primary navigation"><a className="issue-mark" href="#top" aria-label="Akshat Kadam, home"><img src="/favicon.svg" alt="" /></a><p className="issue-number">PERSONAL ARCHIVE / ISSUE <AgeIssue /></p><nav><a href="#origin">My Story</a><a href="#work">9–5</a><a href="#now">5–9</a><a href="/projects">Projects</a><a href="/bookshelf">Bookshelf</a></nav></header>
+    <header className="issue-nav" aria-label="Primary navigation">
+      <a className="issue-mark" href="#top" aria-label="Akshat Kadam, home"><img src="/favicon.svg" alt="" /></a>
+      <p className="issue-number">PERSONAL ARCHIVE / ISSUE <AgeIssue /></p>
+      <nav className="issue-nav-primary"><a href="/projects">Projects</a><a href="https://rec-room.life/akshat" target="_blank" rel="noreferrer">Rec Room</a></nav>
+      <details className="issue-menu">
+        <summary aria-label="Open navigation"><span aria-hidden="true" /><span aria-hidden="true" /><span aria-hidden="true" /></summary>
+        <nav aria-label="Mobile navigation"><a href="/projects">Projects</a><a href="https://rec-room.life/akshat" target="_blank" rel="noreferrer">Rec Room</a></nav>
+      </details>
+    </header>
     <CoverReader />
     <section className="origin-spread" id="origin" aria-labelledby="origin-title"><div className="spread-heading"><p>MY STORY</p><span id="origin-title">HOW&apos;D WE GOT HERE ANYWAY?</span><p>PAGE 004</p></div><div className="life-panels">{chapterOne.map((panel, index) => <article className="life-panel" key={panel.label}><div className="life-panel-image"><img src={panel.image} alt="" /></div><div className="life-panel-copy"><div className="life-panel-meta"><span>0{index + 1}</span><p>{panel.label}</p></div><h2>{panel.title}</h2><strong>{panel.place}</strong><p>{panel.copy}</p></div></article>)}</div></section>
     <section className="arc-section work-battle" id="work" aria-labelledby="work-title">
