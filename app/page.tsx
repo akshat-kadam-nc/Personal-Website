@@ -1,15 +1,16 @@
 import Image from "next/image";
 import { AssistantPanel } from "./assistant-panel";
 import { AgeIssue } from "./age-issue";
+import { AfterHours } from "./after-hours";
 import { CoverReader } from "./cover-reader";
 import "./home-95.css";
+import "./home-59.css";
 
 const ventures = [
   { name: "DeveLearn", tag: "EDUCATION", copy: "Technology education, training, and academic programs across AI, data, software, and cybersecurity.", image: "/home-95-develearn.webp", href: "https://develearn.in" },
   { name: "Next Platforms", tag: "SOFTWARE / AI", copy: "Software development, cloud applications, and AI systems for teams and organizations across markets.", image: "/home-95-next-platforms.webp", href: "https://nextplatforms.in" },
   { name: "Zuma", tag: "LEARNING", copy: "Building toward more personal, intelligent learning experiences for school students.", image: "/home-95-zuma.webp", href: "https://zuma.co.in" },
 ];
-const focus = ["Building Zuma AI", "Growing DeveLearn", "Making software and AI systems through Next Platforms", "Exploring agentic AI, product systems, and new technical possibilities"];
 
 const chapterOne = [
   {
@@ -50,7 +51,7 @@ export default function Home() {
         <div className="work-ink-rupture" aria-hidden="true" />
       </div>
     </section>
-    <section className="now-spread" id="now" aria-labelledby="now-title"><div className="now-art" aria-hidden="true"><span>5–9</span><i>✦</i><b>2026</b></div><div className="now-copy"><p className="chapter-label">5–9 / WHAT&apos;S NOT IN MY RESUME</p><h2 id="now-title">What&apos;s got<br />my attention.</h2><ol>{focus.map((item, index) => <li key={item}><span>0{index + 1}</span>{item}</li>)}</ol></div></section>
+    <AfterHours />
     <section className="interlude" aria-labelledby="interlude-title"><p className="chapter-label">EXTRA PAGES / INNER LIFE</p><h2 id="interlude-title">Manga. Anime.<br />Pokémon. <em>Always.</em></h2><p>The things that make a life vivid belong in the record too. This issue will keep growing—new projects, new places, and side stories included.</p><span className="interlude-sound">ドン!</span></section>
     <AssistantPanel />
     <footer className="issue-footer" id="contact"><div><p>AKSHAT KADAM</p><span>ENTREPRENEUR · TECHNOLOGIST</span></div><p>THE STORY IS STILL<br />BEING DRAWN.</p><div className="footer-links"><a href="mailto:hello@akshatkadam.com">Email ↗</a><a href="#top">Back to cover ↑</a></div></footer>
