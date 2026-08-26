@@ -133,11 +133,28 @@ export function CoverReader() {
     };
 
     const textureLoader = new THREE.TextureLoader();
-    let heroTexturesRequested = false;
-    const loadHeroTextures = () => {
-      if (heroTexturesRequested || panels.length !== 6) return;
-      heroTexturesRequested = true;
-      panels.forEach((panel, index) => {
+    const coverSource = mobileCover ? "/mobile-banner-main.webp" : "/akshat-kadam-cover.webp";
+    textureLoader.load(`${coverSource}?v=${assetRevision}`, (sourceTexture) => {
+      if (disposed) { sourceTexture.dispose(); return; }
+      sourceTexture.colorSpace = THREE.SRGBColorSpace;
+      sourceTexture.minFilter = THREE.LinearFilter;
+      sourceTexture.magFilter = THREE.LinearFilter;
+      for (let index = 0; index < 6; index += 1) {
+        const columns = mobileCover ? 2 : 3;
+        const rows = mobileCover ? 3 : 2;
+        const column = index % columns;
+        const row = Math.floor(index / columns);
+        const texture = sourceTexture.clone();
+        texture.needsUpdate = true;
+        texture.repeat.set(1 / columns, 1 / rows);
+        texture.offset.set(column / columns, 1 - (row + 1) / rows);
+        const geometry = new THREE.PlaneGeometry(1, 1);
+        const mesh = new THREE.Mesh(geometry, new THREE.MeshBasicMaterial({ map: texture, toneMapped: false }));
+        const frame = new THREE.Mesh(new THREE.PlaneGeometry(1, 1), new THREE.MeshBasicMaterial({ color: 0x111111, transparent: true, opacity: 0 }));
+        frame.position.z = -0.025;
+        root.add(frame, mesh);
+        const panel: PanelRig = { frame, home: new THREE.Vector3(), mesh, rotation: 0, size: new THREE.Vector2(), spread: new THREE.Vector3() };
+        panels.push(panel);
         textureLoader.load(heroSources[index], (heroTexture) => {
           if (disposed) { heroTexture.dispose(); return; }
           heroTexture.colorSpace = THREE.SRGBColorSpace;
@@ -162,34 +179,8 @@ export function CoverReader() {
           root.add(hero);
           layoutPanels();
         });
-      });
-    };
-    const coverSource = mobileCover ? "/mobile-banner-main.webp" : "/akshat-kadam-cover.webp";
-    textureLoader.load(`${coverSource}?v=${assetRevision}`, (sourceTexture) => {
-      if (disposed) { sourceTexture.dispose(); return; }
-      sourceTexture.colorSpace = THREE.SRGBColorSpace;
-      sourceTexture.minFilter = THREE.LinearFilter;
-      sourceTexture.magFilter = THREE.LinearFilter;
-      for (let index = 0; index < 6; index += 1) {
-        const columns = mobileCover ? 2 : 3;
-        const rows = mobileCover ? 3 : 2;
-        const column = index % columns;
-        const row = Math.floor(index / columns);
-        const texture = sourceTexture.clone();
-        texture.needsUpdate = true;
-        texture.repeat.set(1 / columns, 1 / rows);
-        texture.offset.set(column / columns, 1 - (row + 1) / rows);
-        const geometry = new THREE.PlaneGeometry(1, 1);
-        const mesh = new THREE.Mesh(geometry, new THREE.MeshBasicMaterial({ map: texture, toneMapped: false }));
-        const frame = new THREE.Mesh(new THREE.PlaneGeometry(1, 1), new THREE.MeshBasicMaterial({ color: 0x111111, transparent: true, opacity: 0 }));
-        frame.position.z = -0.025;
-        root.add(frame, mesh);
-        const panel: PanelRig = { frame, home: new THREE.Vector3(), mesh, rotation: 0, size: new THREE.Vector2(), spread: new THREE.Vector3() };
-        panels.push(panel);
-
       }
       layoutPanels();
-      if (scrollProgress > 0.3) loadHeroTextures();
       stage.classList.add("is-three-ready");
     });
 
@@ -197,7 +188,6 @@ export function CoverReader() {
       const range = Math.max(reader.offsetHeight - window.innerHeight, 1);
       scrollProgress = clamp01(-reader.getBoundingClientRect().top / range);
       reader.style.setProperty("--open-progress", scrollProgress.toFixed(4));
-      if (scrollProgress > 0.3) loadHeroTextures();
     };
     const updatePointer = (event: PointerEvent) => {
       pointerX = (event.clientX / window.innerWidth - 0.5) * 2;

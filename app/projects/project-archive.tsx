@@ -15,7 +15,7 @@ function Cover({project,active,offset,onSelect,onNavigate}:{project:Project;acti
   const style={"--offset":offset,"--depth":Math.abs(offset)} as CSSProperties;
   const art=project.id==="rec-room"?"/projects-cover-rec-room-v2.webp":project.id==="dayforge"?"/projects-cover-dayforge-v2.webp":"/projects-cover-pokemon-destiny-v2.webp";
   return <button className={"quest-cover quest-cover--"+project.id+(active?" is-active":"")} style={style} onClick={onSelect} onKeyDown={event=>{if(event.key==="ArrowLeft")onNavigate(-1);if(event.key==="ArrowRight")onNavigate(1)}} aria-pressed={active}>
-    <span className="cover-issue">SIDE QUEST / {project.issue}</span><span className="cover-art" aria-hidden="true"><Image src={art} alt="" fill sizes="(max-width: 700px) 68vw, 30vw" preload={active}/></span><strong>{project.title}</strong><span className="cover-status">{project.status}</span>
+    <span className="cover-issue">SIDE QUEST / {project.issue}</span><span className="cover-art" aria-hidden="true"><Image src={art} alt="" fill sizes="(max-width: 700px) 68vw, 30vw"/></span><strong>{project.title}</strong><span className="cover-status">{project.status}</span>
   </button>;
 }
 
