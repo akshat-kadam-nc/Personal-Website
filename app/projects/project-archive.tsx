@@ -32,7 +32,12 @@ export function ProjectArchive() {
   const project=projects[active];
   useEffect(()=>{const id=new URLSearchParams(window.location.search).get("project");const found=projects.findIndex(item=>item.id===id);if(found>=0)window.setTimeout(()=>setActive(found),0)},[]);
   const select=(index:number)=>{const next=(index+projects.length)%projects.length;setActive(next);window.history.replaceState(null,"","?project="+projects[next].id)};
-  const openChapter=()=>chapterRef.current?.scrollIntoView({behavior:window.matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth"});
+  const openChapter=()=>{
+    const chapter=chapterRef.current;
+    if(!chapter)return;
+    chapter.scrollIntoView({behavior:window.matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth"});
+    chapter.querySelector<HTMLElement>("#chapter-title")?.focus({preventScroll:true});
+  };
   const onPointerUp=(event:PointerEvent<HTMLDivElement>)=>{if(pointerStart.current===null)return;const movement=event.clientX-pointerStart.current;if(Math.abs(movement)>45)select(active+(movement<0?1:-1));pointerStart.current=null};
   return <main className="projects-page" id="projects-main"><a className="projects-skip" href="#quests-heading">Skip to projects</a>
     <header className="projects-nav"><Link className="issue-mark" href="/" aria-label="Akshat Kadam, home"><Image src="/favicon.svg" alt="" width={48} height={48}/></Link><p>PERSONAL WORK / ISSUE 01</p><nav aria-label="Projects navigation"><Link href="https://rec-room.life/akshat" target="_blank" rel="noreferrer">Rec Room</Link><Link href="/">Main issue</Link></nav></header>
@@ -45,7 +50,7 @@ export function ProjectArchive() {
       <div className="quest-caption" aria-live="polite"><span>{project.issue} / 03</span><div><strong>{project.title}</strong><p>{project.summary}</p></div><button type="button" onClick={openChapter}>Open chapter <span aria-hidden="true">↘</span></button></div>
     </section>
     <section className={"project-chapter project-chapter--"+project.id} ref={chapterRef} id={"chapter-"+project.id} aria-labelledby="chapter-title">
-      <ChapterArt project={project}/><article className="chapter-copy"><div className="chapter-kicker"><span>CHAPTER {project.issue}</span><b>{project.status}</b></div><h2 id="chapter-title">{project.title}</h2><p className="chapter-lede">{project.story}</p><p>{project.detail}</p><ul aria-label="Technology and disciplines">{project.stack.map(item=><li key={item}>{item}</li>)}</ul><div className="chapter-actions">{"live" in project&&<Link href={project.live} target="_blank" rel="noreferrer">Visit live <span aria-hidden="true">↗</span></Link>}<Link href={project.repo} target="_blank" rel="noreferrer">View repository <span aria-hidden="true">↗</span></Link></div>{project.id==="pokemon-destiny"&&<small>Non-commercial fan project. Pokémon is owned by Nintendo, Game Freak, and The Pokémon Company.</small>}</article>
+      <ChapterArt project={project}/><article className="chapter-copy"><div className="chapter-kicker"><span>CHAPTER {project.issue}</span><b>{project.status}</b></div><h2 id="chapter-title" tabIndex={-1}>{project.title}</h2><p className="chapter-lede">{project.story}</p><p>{project.detail}</p><ul aria-label="Technology and disciplines">{project.stack.map(item=><li key={item}>{item}</li>)}</ul><div className="chapter-actions">{"live" in project&&<Link href={project.live} target="_blank" rel="noreferrer">Visit live <span aria-hidden="true">↗</span></Link>}<Link href={project.repo} target="_blank" rel="noreferrer">View repository <span aria-hidden="true">↗</span></Link></div>{project.id==="pokemon-destiny"&&<small>Non-commercial fan project. Pokémon is owned by Nintendo, Game Freak, and The Pokémon Company.</small>}</article>
     </section>
     <footer className="projects-footer"><span>AK! / SIDE QUESTS</span><p>Only the side quests worth keeping.</p><Link href="/">Return to main issue →</Link></footer>
   </main>;
