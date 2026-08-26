@@ -1,5 +1,4 @@
 import Image from "next/image";
-import { AssistantPanel } from "./assistant-panel";
 import { AgeIssue } from "./age-issue";
 import { AfterHours } from "./after-hours";
 import { CoverReader } from "./cover-reader";
@@ -40,8 +39,9 @@ const chapterOne = [
 
 export default function Home() {
   return <main id="top">
+    <a className="site-skip" href="#origin">Skip to story</a>
     <header className="issue-nav" aria-label="Primary navigation">
-      <a className="issue-mark" href="#top" aria-label="Akshat Kadam, home"><img src="/favicon.svg" alt="" /></a>
+      <a className="issue-mark" href="#top" aria-label="Akshat Kadam, home"><Image src="/favicon.svg" alt="" width={48} height={48} /></a>
       <p className="issue-number">PERSONAL ARCHIVE / ISSUE <AgeIssue /></p>
       <nav className="issue-nav-primary"><a href="/projects">Projects</a><a href="https://rec-room.life/akshat" target="_blank" rel="noreferrer">Rec Room</a></nav>
       <details className="issue-menu">
@@ -50,7 +50,7 @@ export default function Home() {
       </details>
     </header>
     <CoverReader />
-    <section className="origin-spread" id="origin" aria-labelledby="origin-title"><div className="spread-heading"><p>MY STORY</p><span id="origin-title">HOW&apos;D WE GOT HERE ANYWAY?</span><p>PAGE 004</p></div><div className="life-panels">{chapterOne.map((panel, index) => <article className="life-panel" key={panel.label}><div className="life-panel-image"><img src={panel.image} alt="" /></div><div className="life-panel-copy"><div className="life-panel-meta"><span>0{index + 1}</span><p>{panel.label}</p></div><h2>{panel.title}</h2><strong>{panel.place}</strong><p>{panel.copy}</p></div></article>)}</div></section>
+    <section className="origin-spread" id="origin" aria-labelledby="origin-title"><div className="spread-heading"><p>MY STORY</p><h2 id="origin-title">HOW&apos;D WE GOT HERE ANYWAY?</h2><p>PAGE 004</p></div><div className="life-panels">{chapterOne.map((panel, index) => <article className="life-panel" key={panel.label}><div className="life-panel-image"><Image src={panel.image} alt="" fill sizes="(max-width: 800px) 100vw, 33vw" /></div><div className="life-panel-copy"><div className="life-panel-meta"><span>0{index + 1}</span><p>{panel.label}</p></div><h2>{panel.title}</h2><strong>{panel.place}</strong><p>{panel.copy}</p></div></article>)}</div></section>
     <section className="arc-section work-battle" id="work" aria-labelledby="work-title">
       <header className="work-battle-header"><p>9–5 / HUSTLE AND BUSTLE</p><h2 id="work-title">The work.</h2></header>
       <div className="work-battle-panels">
@@ -76,7 +76,6 @@ export default function Home() {
       </div>
       <span className="interlude-sound" aria-hidden="true">ドン!</span>
     </section>
-    <AssistantPanel />
     <footer className="issue-footer" id="contact"><div><p>AKSHAT KADAM</p><span>ENTREPRENEUR · TECHNOLOGIST</span></div><p>THE STORY IS STILL<br />BEING DRAWN.</p><div className="footer-links"><a href="mailto:hello@akshatkadam.com">Email ↗</a><a href="#top">Back to cover ↑</a></div></footer>
   </main>;
 }

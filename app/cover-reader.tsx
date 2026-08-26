@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { AgeIssue } from "./age-issue";
 
 import { useEffect, useRef, useState } from "react";
@@ -29,6 +30,11 @@ export function CoverReader() {
     if (!reader || !stage) return;
 
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduceMotion) {
+      stage.classList.add("is-reduced-motion");
+      return () => stage.classList.remove("is-reduced-motion");
+    }
+
     const scene = new THREE.Scene();
     scene.background = new THREE.Color(0xf2f0ea);
     const camera = new THREE.PerspectiveCamera(38, 1, 0.1, 100);
@@ -271,7 +277,7 @@ export function CoverReader() {
 
   return <section className="cover-reader" ref={readerRef} aria-labelledby="cover-title">
     <div className="cover-stage" ref={stageRef}>
-      <picture className="cover-fallback"><source media="(max-width: 800px)" srcSet="/mobile-banner-main.webp" /><img src="/akshat-kadam-cover.webp" alt="Illustrated manga cover introducing Akshat Kadam" /></picture>
+      <picture className="cover-fallback"><source media="(max-width: 800px)" srcSet="/mobile-banner-main.webp" /><Image src="/akshat-kadam-cover.webp" alt="Illustrated manga cover introducing Akshat Kadam" width={1420} height={1104} priority sizes="100vw" /></picture>
       <div className="reader-glyph" aria-hidden="true">始</div>
       <div className="reader-spine" aria-hidden="true"><span>ISSUE <AgeIssue /></span><span>AKSHAT KADAM</span><span>始まり</span></div>
       <div className="reader-topline"><span>AKSHAT KADAM · ISSUE <AgeIssue /></span><span>SCROLL TO OPEN</span></div>
