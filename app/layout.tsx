@@ -30,6 +30,7 @@ export const metadata: Metadata = {
   title: "Akshat Kadam | Personal Archive",
   description:
     "Akshat Kadam is an entrepreneur, technologist, and product builder working across education, AI, software, and new ventures.",
+  alternates: { canonical: "/" },
   openGraph: {
     title: "Akshat Kadam",
     description:
@@ -37,6 +38,12 @@ export const metadata: Metadata = {
     url: "/",
     siteName: "Akshat Kadam",
     type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Akshat Kadam",
+    description:
+      "Entrepreneur, technologist, and product builder working across education, AI, software, and new ventures.",
   },
 };
 
