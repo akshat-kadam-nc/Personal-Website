@@ -39,3 +39,5 @@ yarn-error.log*
 
 # local source artwork; deployable WebP assets live in /public
 /images/
+.next-dev.log
+.next-dev-error.log
